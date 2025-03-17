@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import AuthToken from "./components/AuthToken";
+import Payment from "./components/Payment";
+import SuccessPage from "./components/SuccessPage";
+import FailurePage from "./components/FailurePage";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+    const [token, setToken] = useState("");
+
+    return (
+        <Router>
+            <div>
+                <h1 className="text-center text-3xl font-bold mt-6">PhonePe Payment Integration</h1>
+                <AuthToken setToken={setToken} />
+                <Payment token={token} />
+
+                <Routes>
+                    <Route path="/payment-success" element={<SuccessPage />} />
+                    <Route path="/payment-failed" element={<FailurePage />} />
+                </Routes>
+            </div>
+        </Router>
+    );
+};
 
 export default App;
